@@ -5,7 +5,7 @@ import os
 import requests
 from dotenv import load_dotenv
 
-sa = gspread.service_account(filename = './gspread/service_account.json')
+sa = gspread.service_account(filename = './gspread/service_account.json'filename = "./gspread/service_account.json")
 sh = sa.open('Users TUDUU')
 wks = sh.worksheet('automatizacion')
 wks2 = sh.worksheet('productos')
