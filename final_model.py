@@ -11,10 +11,10 @@ load_dotenv()
 
 AIRTABLE_BASE_ID=os.environ.get("appEX0yBBP1xhAkeL")
 AIRTABLE_API_KEY=os.environ.get("keyedN52o4Usdo8DS")
-AIRTABLE_TABLE_NAME=os.environ.get("Lineas")
+AIRTABLE_TABLE_NAME=os.environ.get("USERS")
 warnings.filterwarnings('ignore')
 
-sa = gspread.service_account()
+sa = gspread.service_account(filename = './gspread/service_account.json')
 sh = sa.open('Users TUDUU')
 wks = sh.worksheet('automatizacion')
 json = wks.get_all_records()
