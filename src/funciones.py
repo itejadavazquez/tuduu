@@ -1,4 +1,4 @@
-from productos import cluster1, cluster2, cluster3, cluster4
+from probabilidades import cluster1, cluster2, cluster3, cluster4
 
 def is_in_list(a, b):
     a = a.split(' ')
@@ -23,7 +23,7 @@ def set_probabilities(li, tipo_cluster):
     return Desayuno, comida_cena, entre_horas, Cuidado_personal, Hogar
 
 def clusters(tipo_comprador):
-    if tipo_comprador=='1':
+    if tipo_comprador== '1':
         return cluster1
     elif tipo_comprador=='2':
         return cluster2
@@ -32,12 +32,16 @@ def clusters(tipo_comprador):
     else:
         return cluster4
 
-def modelo_recomendacion(tipo_comprador, li, cluster):
-    
+def modelo_recomendacion(tipo_comprador, li):
+    lista_productos = []
+    precio_total = 0
     if tipo_comprador == '1':
+        # print('modelo de recomendacion')
         productos = [9,9,3,5,6]
-        Desayuno, comida_cena, entre_horas, Cuidado_personal, Hogar = set_probabilities(í, clusters(tipo_comprador))
+        Desayuno, comida_cena, entre_horas, Cuidado_personal, Hogar = set_probabilities(li, clusters(tipo_comprador))
+        # print('probabilidades asignadas')
         df_cesta = Desayuno.sample(n=productos[0], weights = Desayuno.prob).append(comida_cena.sample(n=productos[1], weights = comida_cena.prob)).append(entre_horas.sample(n=productos[2], weights = entre_horas.prob))#.append(Hogar.sample(n=productos[3])).append(Cuidado_personal.sample(n=productos[4]))
+        # print('cesta lista')
         lista_productos = df_cesta[' Name'].tolist()
         precio_total = df_cesta['Price'].sum()
     elif tipo_comprador == '2':

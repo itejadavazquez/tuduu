@@ -1,3 +1,19 @@
+<<<<<<< Updated upstream
+=======
+# !pip install python-Levenshtein
+
+import pandas as pd
+import numpy as np
+
+import os
+import glob
+import time
+import requests
+from sys import platform
+
+from Levenshtein import distance
+
+>>>>>>> Stashed changes
 import gspread
 import time
 import pandas as pd
@@ -14,7 +30,14 @@ client = gspread.authorize(creds)
 sheet = client.open('Users TUDUU').worksheet('reecomendaciones')
 client = gspread.authorize(creds)
 
+<<<<<<< Updated upstream
 sa = gspread.service_account()
+=======
+from probabilidades import *
+from funciones import *
+
+sa = gspread.service_account(filename = "./../gspread/service_account.json")
+>>>>>>> Stashed changes
 sh = sa.open('Users TUDUU')
 wks = sh.worksheet('automatizacion')
 wks2 = sh.worksheet('productos')
@@ -51,6 +74,7 @@ while True:
         li = dict()
         for filename in all_files:
             df = pd.read_excel(filename, index_col=None, header=0)
+<<<<<<< Updated upstream
             filename = filename.split('\\')[1].split('.')[0]
             df['prob'] = 1/len(df)
             li[filename] = df
@@ -134,13 +158,32 @@ while True:
 
         print('holaaaaa')
         tipo_comprador1 = '1'
+=======
+            # print('ok')
+            if platform =='darwin':
+                filename = filename.split('/')[1].split('.')[0] # mac
+            elif platform == 'win32':
+                filename = filename.split('\\')[1].split('.')[0] # windows
+            df['prob'] = 1/len(df)
+            li[filename] = df
+
+        # Segmento de cliente
+        tipo_comprador1 = '1' # poner el segmento real del cliente
+        # print(tipo_comprador1)
+>>>>>>> Stashed changes
         while True:
-            cesta = modelo_recomendacion(tipo_comprador1)
+            cesta = modelo_recomendacion(li, tipo_comprador1)
             if cesta[1] > 50:
+                # print(len(cesta[1]))
                 break
         print('final')
 
+<<<<<<< Updated upstream
         df3 = pd.read_csv('Menu_Items.csv')
+=======
+        # Cesta recomendada
+        df3 = pd.read_csv('../Menu_Items.csv')
+>>>>>>> Stashed changes
 
 
         #### CELIACOS
@@ -162,6 +205,42 @@ while True:
                 except:
                     pass
 
+<<<<<<< Updated upstream
+=======
+        ## Vegetarianismo
+        print(df2['vegetariano'].iloc[-1])
+
+        max_distance = 2
+        if len(df2['vegetariano'].iloc[-1]) > 0:
+            try:
+                productos_list = df3[' Name']
+                productos_vegetarianos = [producto for producto in productos_list 
+                                        if all(
+                                                distance(x.lower(), prod.lower())>max_distance
+                                                for prod in lista_carne+lista_pescado
+                                                for x in producto.split()
+                                            )]
+            except:
+                pass
+
+
+        ## Veganismo
+        print(df2['vegano'].iloc[-1])
+
+        max_distance=2
+        if len(df2['vegano'].iloc[-1]) > 0:
+            try:
+                productos_list = df3[' Name']
+                productos_veganos = [producto for producto in productos_list 
+                                        if all(
+                                                distance(x.lower(), prod.lower())>max_distance
+                                                for prod in lista_pescado+lista_carne+lista_veganos
+                                                for x in producto.split()
+                                            )]
+            except:
+                pass
+
+>>>>>>> Stashed changes
         df3 = df3[df3[' Name'].isin(cesta[0])]
         df3 = df3.groupby(' Name').apply(lambda x: x.sample(1))
         print(df3[' Name'].tolist())
@@ -170,9 +249,14 @@ while True:
         #print(cesta[0], cesta[1])
         df2 = pd.DataFrame(wks.get_all_records())
         df = pd.DataFrame(wks.get_all_records())
+<<<<<<< Updated upstream
         
         sheet.append_row(df3[' Name'].tolist())
         print('final')
     time.sleep(5)
+=======
+                    
+    time.sleep(5) # Esti tiene que ser cada vez que detecte un cambio, no cada 5 segundos
+>>>>>>> Stashed changes
 
     
