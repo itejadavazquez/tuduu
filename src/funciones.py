@@ -36,10 +36,10 @@ def modelo_recomendacion(tipo_comprador, li):
     lista_productos = []
     precio_total = 0
     if tipo_comprador == '1':
-        # print('modelo de recomendacion')
+        print('modelo de recomendacion')
         productos = [9,9,3,5,6]
         Desayuno, comida_cena, entre_horas, Cuidado_personal, Hogar = set_probabilities(li, clusters(tipo_comprador))
-        # print('probabilidades asignadas')
+        print('probabilidades asignadas')
         df_cesta = Desayuno.sample(n=productos[0], weights = Desayuno.prob).append(comida_cena.sample(n=productos[1], weights = comida_cena.prob)).append(entre_horas.sample(n=productos[2], weights = entre_horas.prob))#.append(Hogar.sample(n=productos[3])).append(Cuidado_personal.sample(n=productos[4]))
         # print('cesta lista')
         lista_productos = df_cesta[' Name'].tolist()
