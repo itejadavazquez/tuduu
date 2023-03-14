@@ -22,7 +22,7 @@ import requests
 import glob
 from dotenv import load_dotenv
 from oauth2client.service_account import ServiceAccountCredentials
-creds = ServiceAccountCredentials.from_json_keyfile_name('../gspread/service_account.json')
+creds = ServiceAccountCredentials.from_json_keyfile_name('../../gspread/service_account.json')
 client = gspread.authorize(creds)
 # open second shee
 sheet = client.open('Users TUDUU').worksheet('reecomendaciones')
