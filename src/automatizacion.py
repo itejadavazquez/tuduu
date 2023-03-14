@@ -160,6 +160,8 @@ while True:
         #print(cesta[0], cesta[1])
         df2 = pd.DataFrame(wks.get_all_records())
         df = pd.DataFrame(wks.get_all_records())
+        
+        sheet.append_row(df3[' Name'].tolist())
                     
     time.sleep(5) # Esti tiene que ser cada vez que detecte un cambio, no cada 5 segundos
 
