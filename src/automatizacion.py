@@ -1,15 +1,4 @@
-import gspread
-import time
-import pandas as pd
-import os
-import requests
-import os
-import requests
-import glob
-import sys
-from Levenshtein import distance
-from dotenv import load_dotenv
-from oauth2client.service_account import ServiceAccountCredentials
+
 creds = ServiceAccountCredentials.from_json_keyfile_name('gspread/service_account.json')
 client = gspread.authorize(creds)
 # open second shee
