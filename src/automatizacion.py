@@ -216,7 +216,8 @@ while True:
             print('final')
         except Exception as e:
             # Imprime el error en la consola y devuelve la cadena de error
-            print("Se produjo un error: ", e, file=sys.stderr)
+            error_message = "Se produjo un error: " + str(e)
+            print(HtmlService.createHtmlOutput(error_message).getContent())
             print("Traceback: ", traceback.format_exc(), file=sys.stderr)
             sys.stdout.flush()
             sys.stderr.flush()
