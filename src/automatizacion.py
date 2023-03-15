@@ -1,4 +1,3 @@
-
 creds = ServiceAccountCredentials.from_json_keyfile_name('gspread/service_account.json')
 client = gspread.authorize(creds)
 # open second shee
