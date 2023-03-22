@@ -6,5 +6,6 @@ function ejemploLodash() {
   // Utilizar la librería Lodash
   var array = [1, 2, 3, 4, 5];
   var sum = _.sum(array);
+  console.log('hola');
   console.log('La suma del array es ' + sum);
 }
