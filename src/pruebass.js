@@ -1,4 +1,4 @@
-console.log("Hola");
+// console.log("Hola");
 
 function ejemploLodash() {
   // Cargar la librería Lodash
