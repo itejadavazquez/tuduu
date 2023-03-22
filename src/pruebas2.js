@@ -1,3 +1,4 @@
+console.log('hola0')
 function ejemploLodash() {
   // Cargar la librería Lodash
   colsole.log('hola1')
