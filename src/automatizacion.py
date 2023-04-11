@@ -27,7 +27,7 @@ clusters_vegano = [cluster1_vegano, cluster2_vegano, cluster3_vegano, cluster4_v
 # sheet = client.open('Users TUDUU').worksheet('reecomendaciones')
 # client = gspread.authorize(creds)
 
-sa = gspread.service_account(filename = "../gspread/service_account.json")
+sa = gspread.service_account(filename = "service_account.json")
 sh = sa.open('Users TUDUU')
 wks = sh.worksheet('automatizacion')
 wks2 = sh.worksheet('productos')
