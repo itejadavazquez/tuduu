@@ -55,7 +55,7 @@ while True:
         df = df2
         print('cambios efectuados')
         load_dotenv()
-        path = r'../cluster_2_1/' # use your path
+        path = r'../data/cluster_2_1/' # use your path
         #save into df all files
         all_files = glob.glob(path + "/*.xlsx")
 
@@ -141,7 +141,7 @@ while True:
             if cesta[1] > 50:
                 break
 
-        df3 = pd.read_csv('../Menu_Items.csv')
+        df3 = pd.read_csv('../data/Menu_Items.csv')
 
         #### CELIACOS
         if len(df2['celiaco'].iloc[-1]) > 0:
