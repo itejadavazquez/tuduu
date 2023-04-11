@@ -12,5 +12,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Instalar dependencias
         run: pip install -r requirements.txt
+      - name: Set up workspace
+        run: echo "workspace:${{ github.workspace }}" >> $GITHUB_ENV
       - name: Ejecutar script
         run: python src/automatizacion.py # Esta línea se configura para ejecutar tu script. Asegúrate de que la ruta sea correcta.
