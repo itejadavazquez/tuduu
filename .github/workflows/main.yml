@@ -2,7 +2,7 @@ name: Ejecutar script semanalmente
 
 on:
   schedule:
-    - cron: '52 14 * * 2' # Esta línea se configura para ejecutar el script cada viernes a las 13:00 UTC
+    - cron: '*5/ * * * *' # Esta línea se configura para ejecutar el script cada viernes a las 13:00 UTC
 
 jobs:
   run-script:
@@ -11,4 +11,4 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
       - name: Ejecutar script
-        run: python ../../src/automatizacion.py # Esta línea se configura para ejecutar tu script. Asegúrate de que la ruta sea correcta.
+        run: python src/automatizacion.py # Esta línea se configura para ejecutar tu script. Asegúrate de que la ruta sea correcta.
