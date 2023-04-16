@@ -84,21 +84,21 @@ def is_in_list(a, b):
     return any(i in a for i in b)
 
 def set_probabilities(tipo_cluster):
-    for i in range(len(li['Desayuno'])):
-        if is_in_list(li['Desayuno'][' Name'][i], tipo_cluster[0]):
-            li['Desayuno']['prob'][i] *= 100
+#     for i in range(len(li['Desayuno'])):
+#         if is_in_list(li['Desayuno'][' Name'][i], tipo_cluster[0]):
+#             li['Desayuno']['prob'][i] *= 100
     for i in range(len(li['comida_cena'] )):
         if is_in_list(li['comida_cena'][' Name'][i], tipo_cluster[1]):
             li['comida_cena']['prob'][i] *= 100
     for i in range(len(li['entre_horas'] )):
         if is_in_list(li['entre_horas'][' Name'][i], tipo_cluster[2]):
             li['entre_horas']['prob'][i] *= 100
-    Desayuno = li['Desayuno']
+#     Desayuno = li['Desayuno']
     comida_cena = li['comida_cena']
     entre_horas = li['entre_horas']
     Cuidado_personal = li['Cuidado_personal']
     Hogar = li['Hogar']
-    return Desayuno, comida_cena, entre_horas, Cuidado_personal, Hogar
+    return comida_cena, entre_horas#, Cuidado_personal, Hogar, Desayuno
 
 tipo_comprador1 = 'Como muy sano y hago deporte'
 
