@@ -65,7 +65,7 @@ warnings.filterwarnings("ignore")
 df2 = pd.DataFrame(wks.get_all_records())
 df = df2
 load_dotenv()
-path = r'../data/cluster_2_1/' # use your path
+path = r'/data/cluster_2_1/' # use your path
 ruta_carpeta = os.environ['GITHUB_WORKSPACE'] + 'path'
 #save into df all files
 all_files = glob.glob(ruta_carpeta + "/*.xlsx")
