@@ -18,3 +18,5 @@ jobs:
 #         run: echo "workspace:${{ github.workspace }}" >> $GITHUB_ENV
       - name: Ejecutar script
         run: python src/automatizacion.py # Esta línea se configura para ejecutar tu script. Asegúrate de que la ruta sea correcta.
+      - name: Imprimir resultado del script
+        run: echo "${{ steps.script_result.stdout }}"
