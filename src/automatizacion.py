@@ -68,7 +68,7 @@ load_dotenv()
 path = r'../data/cluster_2_1/' # use your path
 # ruta_carpeta = os.environ['GITHUB_WORKSPACE'] + path
 #save into df all files
-all_files = glob.glob(path + "/*.xlsx")
+all_files = glob.glob(path + "*.xlsx")
 print(all_files)
 li = dict()
 for filename in all_files:
