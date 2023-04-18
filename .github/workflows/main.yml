@@ -13,7 +13,7 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r requirements.txt
       - name: Imprimir directorio actual
-        run: pwd
+        run: tree . -L 3
 #       - name: Set up workspace
 #         run: echo "workspace:${{ github.workspace }}" >> $GITHUB_ENV
       - name: Ejecutar script
