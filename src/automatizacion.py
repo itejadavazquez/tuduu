@@ -74,7 +74,7 @@ li = dict()
 for filename in all_files:
     df = pd.read_excel(filename, index_col=None, header=0)
     print(filename)
-    filename = filename.split('/')[3].split('.')[0]
+    filename = os.path.basename(filename).split('.')[0]
     df['prob'] = 1/len(df)
     li[filename] = df
 
