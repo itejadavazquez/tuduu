@@ -143,41 +143,45 @@ def modelo_recomendacion(tipo_comprador, clusters):
     
     return lista_productos, precio_total
 
-while True:
-    if len(df2['vegetariano'].iloc[-1]) > 0:
-        cesta = modelo_recomendacion(tipo_comprador1, clusters_vegetariano)
-    else:
-        cesta = modelo_recomendacion(tipo_comprador1, clusters_normal)
-    print('Cesta: ', cesta[0])
-    if cesta[1] > 50:
+  
+for _, _ in df_final.iterrows():
+  while True:
+      if len(df2['vegetariano'].iloc[-1]) > 0:
+          cesta = modelo_recomendacion(tipo_comprador1, clusters_vegetariano)
+      else:
+          cesta = modelo_recomendacion(tipo_comprador1, clusters_normal)
+      print('Cesta: ', cesta[0])
+      if cesta[1] > 50:
+        cesta = cesta[0]
         break
 
-df3 = pd.read_csv('../data/Menu_Items.csv')
+  df3 = pd.read_csv('../data/Menu_Items.csv')
 
-#### CELIACOS
-if len(df2['celiaco'].iloc[-1]) > 0:
-    for i in range(len(df3)):
-        # si exiten productos sin gluten, cambiarlos por los sin gluten
-        try:
-            df3[' Name'].iloc[i] = df3[df3[' Name'].str.contains('gluten') & df3[' Name'].str.contains(df3[' Name'].iloc[i])][' Name'].iloc[0]
-        except:
-            pass
+  #### CELIACOS
+  if len(df2['celiaco'].iloc[-1]) > 0:
+      for i in range(len(df3)):
+          # si exiten productos sin gluten, cambiarlos por los sin gluten
+          try:
+              df3[' Name'].iloc[i] = df3[df3[' Name'].str.contains('gluten') & df3[' Name'].str.contains(df3[' Name'].iloc[i])][' Name'].iloc[0]
+          except:
+              pass
 
-#### LACTOSA
-if len(df2['intolerante'].iloc[-1]) > 0:
-    for i in range(len(df3)):
-        try:
-            df3[' Name'].iloc[i] = df3[df3[' Name'].str.contains('lactosa') & df3[' Name'].str.contains(df3[' Name'].iloc[i])][' Name'].iloc[0]
-        except:
-            pass
+  #### LACTOSA
+  if len(df2['intolerante'].iloc[-1]) > 0:
+      for i in range(len(df3)):
+          try:
+              df3[' Name'].iloc[i] = df3[df3[' Name'].str.contains('lactosa') & df3[' Name'].str.contains(df3[' Name'].iloc[i])][' Name'].iloc[0]
+          except:
+              pass
 
-df3 = df3[df3[' Name'].isin(cesta[0])]
-df3 = df3.groupby(' Name').apply(lambda x: x.sample(1))
-print(df3[' Name'].tolist())
+  df3 = df3[df3[' Name'].isin(cesta[0])]
+  df3 = df3.groupby(' Name').apply(lambda x: x.sample(1))
+  print(df3[' Name'].tolist())
 
-#print(cesta[0], cesta[1])
-df2 = pd.DataFrame(wks.get_all_records())
-df = pd.DataFrame(wks.get_all_records())
+  #print(cesta[0], cesta[1])
+  df2 = pd.DataFrame(wks.get_all_records())
+  df = pd.DataFrame(wks.get_all_records())
 
-# sheet.append_row(df3[' Name'].tolist())
-print('final')
+  valor = ", ".join(cesta)
+  wks_final.update_cell(i,4 , valor) # Actualiza la celda correspondiente con el resultado
+  i += 1
