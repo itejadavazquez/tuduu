@@ -157,6 +157,7 @@ for _, _ in df_final.iterrows():
           cesta = modelo_recomendacion(tipo_comprador1, clusters_normal)
       print('Cesta: ', cesta[0])
       if cesta[1] > 50:
+        precio = cesta[1]
         cesta = cesta[0]
         break
 
@@ -188,5 +189,6 @@ for _, _ in df_final.iterrows():
   df = pd.DataFrame(wks.get_all_records())
 
   valor = ", ".join(cesta)
-  wks_final.update_cell(i,4 , valor) # Actualiza la celda correspondiente con el resultado
+  wks_final.update_cell(i,4 , valor) 
+  wks_final.update_cell(i,5 , precio) 
   i += 1
