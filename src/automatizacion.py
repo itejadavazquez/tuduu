@@ -142,7 +142,12 @@ def modelo_recomendacion(tipo_comprador, clusters):
         precio_total = df_cesta['Price'].sum()
     
     return lista_productos, precio_total
+  
+wks_final = sh.worksheet('clientes')
+json_final = wks_final.get_all_records()
+df_final = pd.DataFrame(json_final)
 
+i = 2
   
 for _, _ in df_final.iterrows():
   while True:
