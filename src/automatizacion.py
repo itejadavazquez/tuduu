@@ -43,7 +43,7 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict({
 
 sa = gspread.authorize(creds)
 sh = sa.open('Users TUDUU')
-wks = sh.worksheet('automatizacion')
+wks = sh.worksheet('clientes')
 wks2 = sh.worksheet('productos')
 json = wks.get_all_records()
 json2 = wks2.get_all_records()
