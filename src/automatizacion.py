@@ -179,7 +179,7 @@ for _, _ in df_final.iterrows():
           except:
               pass
 
-  df3 = df3[df3[' Name'].isin(cesta[0])]
+  df3 = df3[df3[' Name'].isin(cesta)]
   df3 = df3.groupby(' Name').apply(lambda x: x.sample(1))
   print(df3[' Name'].tolist())
 
