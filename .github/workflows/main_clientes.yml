@@ -9,6 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Google Spreadsheets
+        uses: google-github-actions/google-spreadsheets@master
+        with:
+          credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup Python
