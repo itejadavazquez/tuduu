@@ -1,1 +1,28 @@
-name: Nuevos clientes
+name: Google Sheets Changes Workflow
+on:
+  push:
+    branches:
+      - main
+  google-spreadsheets:
+    types: ['updated']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client pip install requirements.txt
+      - name: Run automation script
+        working-directory: ./src
+        run: python automatizacion.py
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          SPREADSHEET_ID: ${{ github.event.client_payload.spreadsheetId }}
+          RANGE_NAME: ${{ github.event.client_payload.range }}
