@@ -3,16 +3,16 @@ on:
   push:
     branches:
       - main
-  google-spreadsheets:
-    types: ['updated']
+#  google-spreadsheets:
+#    types: ['updated']
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Google Spreadsheets
-        uses: google-github-actions/google-spreadsheets@master
-        with:
-          credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+#      - name: Setup Google Spreadsheets
+#        uses: google-github-actions/google-spreadsheets@master
+#        with:
+#          credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup Python
@@ -26,7 +26,7 @@ jobs:
       - name: Run automation script
         working-directory: ./src
         run: python automatizacion.py
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-          SPREADSHEET_ID: ${{ github.event.client_payload.spreadsheetId }}
-          RANGE_NAME: ${{ github.event.client_payload.range }}
+#        env:
+#         GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+#          SPREADSHEET_ID: ${{ github.event.client_payload.spreadsheetId }}
+#          RANGE_NAME: ${{ github.event.client_payload.range }}
