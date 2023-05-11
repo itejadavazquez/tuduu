@@ -163,22 +163,22 @@ for _, _ in df_final.iterrows():
 
   df3 = pd.read_csv('../data/Menu_Items.csv')
 
-  #### CELIACOS
-  if len(df2['celiaco'].iloc[-1]) > 0:
-      for i in range(len(df3)):
-          # si exiten productos sin gluten, cambiarlos por los sin gluten
-          try:
-              df3[' Name'].iloc[i] = df3[df3[' Name'].str.contains('gluten') & df3[' Name'].str.contains(df3[' Name'].iloc[i])][' Name'].iloc[0]
-          except:
-              pass
+#   #### CELIACOS
+#   if len(df2['celiaco'].iloc[-1]) > 0:
+#       for i in range(len(df3)):
+#           # si exiten productos sin gluten, cambiarlos por los sin gluten
+#           try:
+#               df3[' Name'].iloc[i] = df3[df3[' Name'].str.contains('gluten') & df3[' Name'].str.contains(df3[' Name'].iloc[i])][' Name'].iloc[0]
+#           except:
+#               pass
 
-  #### LACTOSA
-  if len(df2['intolerante'].iloc[-1]) > 0:
-      for i in range(len(df3)):
-          try:
-              df3[' Name'].iloc[i] = df3[df3[' Name'].str.contains('lactosa') & df3[' Name'].str.contains(df3[' Name'].iloc[i])][' Name'].iloc[0]
-          except:
-              pass
+#   #### LACTOSA
+#   if len(df2['intolerante'].iloc[-1]) > 0:
+#       for i in range(len(df3)):
+#           try:
+#               df3[' Name'].iloc[i] = df3[df3[' Name'].str.contains('lactosa') & df3[' Name'].str.contains(df3[' Name'].iloc[i])][' Name'].iloc[0]
+#           except:
+#               pass
 
   df3 = df3[df3[' Name'].isin(cesta)]
   df3 = df3.groupby(' Name').apply(lambda x: x.sample(1))
