@@ -8,24 +8,11 @@ import requests
 import glob
 from dotenv import load_dotenv
 from oauth2client.service_account import ServiceAccountCredentials
-# path = os.listdir('../gspread/')
-# creds = ServiceAccountCredentials.from_json_keyfile_name(filename = '../gspread/service_account.json')
-# client = gspread.authorize(creds)
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
+platos = pd.read_excel('../data/Platos.xlsx')
+mercadona = pd.read_csv('../data/Productos_final.csv')
 
-from Levenshtein import distance
-
-# importamos clusters
-from probabilidades import cluster1, cluster2, cluster3, cluster4
-from probabilidades_vegetarianos import cluster1_vegetariano, cluster2_vegetariano, cluster3_vegetariano, cluster4_vegetariano
-from probabilidades_veganos import cluster1_vegano, cluster2_vegano, cluster3_vegano, cluster4_vegano
-
-clusters_normal = [cluster1, cluster2, cluster3, cluster4]
-clusters_vegetariano = [cluster1_vegetariano, cluster2_vegetariano, cluster3_vegetariano, cluster4_vegetariano]
-clusters_vegano = [cluster1_vegano, cluster2_vegano, cluster3_vegano, cluster4_vegano]
-
-# open second shee
-# sheet = client.open('Users TUDUU').worksheet('reecomendaciones')
-# client = gspread.authorize(creds)
 
 scope = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
 creds = ServiceAccountCredentials.from_json_keyfile_dict({
@@ -62,133 +49,94 @@ warnings.filterwarnings("ignore")
 
 
 
-df2 = pd.DataFrame(wks.get_all_records())
-df = df2
-load_dotenv()
-path = r'../data/cluster_2_1/' # use your path
-# ruta_carpeta = os.environ['GITHUB_WORKSPACE'] + path
-#save into df all files
-all_files = glob.glob(path + "*.xlsx")
-print(all_files)
-li = dict()
-for filename in all_files:
-    df = pd.read_excel(filename, index_col=None, header=0)
-    print(filename)
-    filename = os.path.basename(filename).split('.')[0]
-    df['prob'] = 1/len(df)
-    li[filename] = df
+def buscar_producto(ingrediente, df, sin_gluten=False):
+    # Itera sobre los nombres de los productos en el archivo Excel
+    nombres_productos = df[' Name'].tolist()
+    mejores_coincidencias = process.extractOne(ingrediente, nombres_productos)
 
-def is_in_list(a, b):
-    a = a.split(' ')
-    a = [word.lower() for word in a]
-    return any(i in a for i in b)
+    # Establece un umbral de similitud mínima para considerar una coincidencia
+    umbral_similitud = 80
+    if mejores_coincidencias[1] >= umbral_similitud:
+        producto_encontrado = mejores_coincidencias[0]
+        return producto_encontrado
+    else:
+        return None
 
-def set_probabilities(tipo_cluster):
-    for i in range(len(li['Desayuno'])):
-        if is_in_list(li['Desayuno'][' Name'][i], tipo_cluster[0]):
-            li['Desayuno']['prob'][i] *= 100
-    for i in range(len(li['comida_cena'] )):
-        if is_in_list(li['comida_cena'][' Name'][i], tipo_cluster[1]):
-            li['comida_cena']['prob'][i] *= 100
-    for i in range(len(li['entre_horas'] )):
-        if is_in_list(li['entre_horas'][' Name'][i], tipo_cluster[2]):
-            li['entre_horas']['prob'][i] *= 100
-    Desayuno = li['Desayuno']
-    comida_cena = li['comida_cena']
-    entre_horas = li['entre_horas']
-    Cuidado_personal = li['Cuidado_personal']
-    Hogar = li['Hogar']
-    return Desayuno, comida_cena, entre_horas#, Cuidado_personal, Hogar, Desayuno
+def obtener_productos_por_categoria(categoria, numero_recetas):
+    # Filtra las recetas por la categoría especificada
+    recetas_filtradas = platos[platos['Categoría  '] == categoria]
 
-tipo_comprador1 = 'Como muy sano y hago deporte'
+    # Obtiene una lista de todos los ingredientes de las recetas de la categoría
+    ingredientes = []
+    if numero_recetas <= 0:
+        return []
 
-if tipo_comprador1 == 'Como muy sano y hago deporte':
-    tipo_comprador1 = '1'
-elif tipo_comprador1 == 'Dieta equilibrada, sin excesos':
-    tipo_comprador1 = '2'
-elif tipo_comprador1 == 'No me quito nada, como de todo':
-    tipo_comprador1 = '3'
-elif tipo_comprador1 == 'Como sano pero me gusta caer en la tentación...':
-    tipo_comprador1 = '4'
-else:
-    tipo_comprador1 == '4'
+    # Verifica si hay suficientes recetas disponibles
+    if len(recetas_filtradas) <= numero_recetas:
+        return recetas_filtradas
+    # Obtiene una muestra aleatoria del número de recetas deseado
+    recetas_muestra = recetas_filtradas.sample(n=numero_recetas)
+    for i, receta in recetas_muestra.iterrows():
+        ingredientes.extend([ingrediente.strip() for ingrediente in receta['Ingredientes '].split(',')])
+    receta_completa = recetas_muestra['Platos'].tolist()
+    print(receta_completa)
 
-# print(tipo_comprador1)
-
-def modelo_recomendacion(tipo_comprador, clusters):
-    if tipo_comprador == '1':
-        productos = [9,9,3,5,6]
-        Desayuno, comida_cena, entre_horas = set_probabilities(clusters[0])
-        df_cesta = Desayuno.sample(n=productos[0], weights = Desayuno.prob).append(comida_cena.sample(n=productos[1], weights = comida_cena.prob)).append(entre_horas.sample(n=productos[2], weights = entre_horas.prob))#.append(Hogar.sample(n=productos[3])).append(Cuidado_personal.sample(n=productos[4]))
-        lista_productos = df_cesta[' Name'].tolist()
-        precio_total = df_cesta['Price'].sum()
-    elif tipo_comprador == '2':
-        productos = [9,9,7,5,6]
-        Desayuno, comida_cena, entre_horas, Cuidado_personal, Hogar = set_probabilities(clusters[1])
-        df_cesta = Desayuno.sample(n=productos[0], weights = Desayuno.prob).append(comida_cena.sample(n=productos[1], weights = comida_cena.prob)).append(entre_horas.sample(n=productos[2], weights = entre_horas.prob))#.append(Hogar.sample(n=productos[3])).append(Cuidado_personal.sample(n=productos[4]))
-        lista_productos = df_cesta[' Name'].tolist()
-        precio_total = df_cesta['Price'].sum()
-    elif tipo_comprador == '3':
-        productos = [9,9,7,5,6]
-        Desayuno, comida_cena, entre_horas, Cuidado_personal, Hogar = set_probabilities(clusters[2])
-        df_cesta = Desayuno.sample(n=productos[0], weights = Desayuno.prob).append(comida_cena.sample(n=productos[1], weights = comida_cena.prob)).append(entre_horas.sample(n=productos[2], weights = entre_horas.prob))#.append(Hogar.sample(n=productos[3])).append(Cuidado_personal.sample(n=productos[4]))
-        lista_productos = df_cesta[' Name'].tolist()
-        precio_total = df_cesta['Price'].sum()
-    elif tipo_comprador == '4':
-        productos = [9,9,7,5,6]
-        Desayuno, comida_cena, entre_horas, Cuidado_personal, Hogar = set_probabilities(clusters[3])
-        df_cesta = Desayuno.sample(n=productos[0], weights = Desayuno.prob).append(comida_cena.sample(n=productos[1], weights = comida_cena.prob)).append(entre_horas.sample(n=productos[2], weights = entre_horas.prob))#.append(Hogar.sample(n=productos[3])).append(Cuidado_personal.sample(n=productos[4]))
-        lista_productos = df_cesta[' Name'].tolist()
-        precio_total = df_cesta['Price'].sum()
+    # Elimina duplicados y obtiene una muestra aleatoria del número de productos deseado
+    ingredientes_unicos = list(set(ingredientes))
     
-    return lista_productos, precio_total
-  
+    # Busca los productos correspondientes a cada ingrediente
+    productos_encontrados = []
+    for ingrediente in ingredientes_unicos:
+        producto = buscar_producto(ingrediente, mercadona)
+        if producto:
+            productos_encontrados.append(producto)
+
+    return productos_encontrados, receta_completa
+
+def precio_cesta(cesta, df):
+    precio_total = 0
+    for producto in cesta:
+        precio = df.loc[df[' Name'] == producto, 'Price'].iloc[0]
+        precio_total += precio
+    return precio_total
+
+
+
 wks_final = sh.worksheet('clientes')
 json_final = wks_final.get_all_records()
 df_final = pd.DataFrame(json_final)
 
+
 i = 2
-  
 for _, _ in df_final.iterrows():
-  while True:
-      if len(df2['vegetariano'].iloc[-1]) > 0:
-          cesta = modelo_recomendacion(tipo_comprador1, clusters_vegetariano)
-      else:
-          cesta = modelo_recomendacion(tipo_comprador1, clusters_normal)
-      print('Cesta: ', cesta[0])
-      if cesta[1] > 50:
-        precio = cesta[1]
-        cesta = cesta[0]
-        break
+    tipo_consumidor = _['tipo cliente']
+    print(tipo_consumidor)
+    if tipo_consumidor == 'sin restricciones':
+        cesta = obtener_productos_por_categoria('Desayunos ', 5) + obtener_productos_por_categoria('Carne  ', 3) + obtener_productos_por_categoria('Pescado', 3)
+        cesta1 = cesta[0]
+        cesta2 = cesta[1]
+    elif tipo_consumidor == 'Como sano pero me gusta caer en la tentación…':
+        cesta = obtener_productos_por_categoria('Verduras ', 4)
+        cesta1 = cesta[0]
+        cesta2 = cesta[1]
+    elif tipo_consumidor == 'Dieta equilibrada, sin excesos':
+        cesta = obtener_productos_por_categoria('Carne ', 2) + obtener_productos_por_categoria('Pescado', 2) + obtener_productos_por_categoria('Legumbres ', 1) + obtener_productos_por_categoria('Verduras ', 2) + obtener_productos_por_categoria('Ensalada', 1) + obtener_productos_por_categoria('Fruta', 1) + obtener_productos_por_categoria('Desayunos ', 1)
+        cesta1 = cesta[0]
+        cesta2 = cesta[1]
+    elif tipo_consumidor == 'Como sano y deporte':
+        cesta1 = cesta[0]
+        cesta2 = cesta[1]
+        cesta = obtener_productos_por_categoria('Proteínas', 4) + obtener_productos_por_categoria('Desayunos ', 4) + obtener_productos_por_categoria('Alcohol  ', 2)
 
-  df3 = pd.read_csv('../data/Menu_Items.csv')
-
-#   #### CELIACOS
-#   if len(df2['celiaco'].iloc[-1]) > 0:
-#       for i in range(len(df3)):
-#           # si exiten productos sin gluten, cambiarlos por los sin gluten
-#           try:
-#               df3[' Name'].iloc[i] = df3[df3[' Name'].str.contains('gluten') & df3[' Name'].str.contains(df3[' Name'].iloc[i])][' Name'].iloc[0]
-#           except:
-#               pass
-
-#   #### LACTOSA
-#   if len(df2['intolerante'].iloc[-1]) > 0:
-#       for i in range(len(df3)):
-#           try:
-#               df3[' Name'].iloc[i] = df3[df3[' Name'].str.contains('lactosa') & df3[' Name'].str.contains(df3[' Name'].iloc[i])][' Name'].iloc[0]
-#           except:
-#               pass
-
-  df3 = df3[df3[' Name'].isin(cesta)]
-  df3 = df3.groupby(' Name').apply(lambda x: x.sample(1))
-  print(df3[' Name'].tolist())
-
-  #print(cesta[0], cesta[1])
-  df2 = pd.DataFrame(wks.get_all_records())
-  df = pd.DataFrame(wks.get_all_records())
-
-  valor = ", ".join(cesta)
-  wks_final.update_cell(i,4 , valor) 
-  wks_final.update_cell(i,5 , precio) 
-  i += 1
+    valor = ", ".join(cesta1)
+    valor2 = ", ".join(cesta2)
+    print(valor)
+    wks_final.update_cell(i,4 , valor) # Actualiza la celda correspondiente con el resultado
+    precio = precio_cesta(valor, mercadona)
+    wks_final.update_cell(i,6 , precio)
+    wks_final.update_cell(i,5 ,valor2)
+    # cesta_premium = recomendar_cesta_mas_cara(df3, cesta, len(cesta))
+    # cesta_premium = cesta_premium[' Name'].tolist()
+    # valor2 = ", ".join(cesta_premium)
+    # wks_final.update_cell(i,5 , valor2) # Actualiza la celda correspondiente con el resultado
+    i += 1
