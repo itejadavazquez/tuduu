@@ -112,7 +112,7 @@ for _, _ in df_final.iterrows():
     tipo_consumidor = _['tipo cliente']
     print(tipo_consumidor)
     if tipo_consumidor == 'sin restricciones':
-        cesta = obtener_productos_por_categoria('Desayunos ', 5) + obtener_productos_por_categoria('Carne  ', 3) + obtener_productos_por_categoria('Pescado', 3)
+        cesta = obtener_productos_por_categoria('Desayunos ', 5) + obtener_productos_por_categoria('Carne ', 3) + obtener_productos_por_categoria('Pescado', 3)
         cesta1 = cesta[0]
         cesta2 = cesta[1]
     elif tipo_consumidor == 'Como sano pero me gusta caer en la tentación…':
@@ -123,10 +123,10 @@ for _, _ in df_final.iterrows():
         cesta = obtener_productos_por_categoria('Carne ', 2) + obtener_productos_por_categoria('Pescado', 2) + obtener_productos_por_categoria('Legumbres ', 1)
         cesta1 = cesta[0]
         cesta2 = cesta[1]
-    elif tipo_consumidor == 'Como sano y deporte':
+    else:
         cesta1 = cesta[0]
         cesta2 = cesta[1]
-        cesta = obtener_productos_por_categoria('Carne ', 4) + obtener_productos_por_categoria('Desayunos ', 4) + obtener_productos_por_categoria('Alcohol  ', 2)
+        cesta = obtener_productos_por_categoria('Carne ', 4) + obtener_productos_por_categoria('Desayunos ', 4) + obtener_productos_por_categoria('Alcohol ', 2)
 
     valor = ", ".join(cesta1)
     valor2 = ", ".join(cesta2)
