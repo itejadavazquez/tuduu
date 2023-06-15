@@ -79,7 +79,7 @@ def obtener_productos_por_categoria(categoria, numero_recetas):
     for i, receta in recetas_muestra.iterrows():
         ingredientes.extend([ingrediente.strip() for ingrediente in receta['Ingredientes '].split(',')])
     receta_completa = recetas_muestra['Platos'].tolist()
-    print(receta_completa)
+    
 
     # Elimina duplicados y obtiene una muestra aleatoria del número de productos deseado
     ingredientes_unicos = list(set(ingredientes))
@@ -133,7 +133,7 @@ for _, _ in df_final.iterrows():
     print(valor)
     wks_final.update_cell(i,4 , valor) # Actualiza la celda correspondiente con el resultado
     precio = precio_cesta(valor, mercadona)
-    wks_final.update_cell(i,6 , precio)
+    wks_final.update_cell(i,6 , cesta1)
     wks_final.update_cell(i,5 ,valor2)
     # cesta_premium = recomendar_cesta_mas_cara(df3, cesta, len(cesta))
     # cesta_premium = cesta_premium[' Name'].tolist()
