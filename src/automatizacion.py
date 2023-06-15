@@ -120,7 +120,7 @@ for _, _ in df_final.iterrows():
         cesta1 = cesta[0]
         cesta2 = cesta[1]
     elif tipo_consumidor == 'Dieta equilibrada, sin excesos':
-        cesta = obtener_productos_por_categoria('Carne ', 2) + obtener_productos_por_categoria('Pescado', 2) + obtener_productos_por_categoria('Legumbres ', 1) + obtener_productos_por_categoria('Verduras ', 2) + obtener_productos_por_categoria('Ensalada', 1) + obtener_productos_por_categoria('Fruta', 1) + obtener_productos_por_categoria('Desayunos ', 1)
+        cesta = obtener_productos_por_categoria('Carne ', 2) + obtener_productos_por_categoria('Pescado', 2) + obtener_productos_por_categoria('Legumbres ', 1)
         cesta1 = cesta[0]
         cesta2 = cesta[1]
     elif tipo_consumidor == 'Como sano y deporte':
