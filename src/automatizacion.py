@@ -132,8 +132,8 @@ for _, _ in df_final.iterrows():
     valor2 = ", ".join(cesta2)
     print(valor)
     wks_final.update_cell(i,4 , valor) # Actualiza la celda correspondiente con el resultado
-#     precio = precio_cesta(valor, mercadona)
-#     wks_final.update_cell(i,6 , precio)
+    precio = precio_cesta(valor, mercadona)
+    wks_final.update_cell(i,6 , precio)
     wks_final.update_cell(i,5 ,valor2)
     # cesta_premium = recomendar_cesta_mas_cara(df3, cesta, len(cesta))
     # cesta_premium = cesta_premium[' Name'].tolist()
