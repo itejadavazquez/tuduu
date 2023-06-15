@@ -126,7 +126,7 @@ for _, _ in df_final.iterrows():
     elif tipo_consumidor == 'Como sano y deporte':
         cesta1 = cesta[0]
         cesta2 = cesta[1]
-        cesta = obtener_productos_por_categoria('Proteínas', 4) + obtener_productos_por_categoria('Desayunos ', 4) + obtener_productos_por_categoria('Alcohol  ', 2)
+        cesta = obtener_productos_por_categoria('Carne ', 4) + obtener_productos_por_categoria('Desayunos ', 4) + obtener_productos_por_categoria('Alcohol  ', 2)
 
     valor = ", ".join(cesta1)
     valor2 = ", ".join(cesta2)
