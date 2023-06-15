@@ -129,6 +129,7 @@ for _, _ in df_final.iterrows():
         cesta = obtener_productos_por_categoria('Carne ', 4) + obtener_productos_por_categoria('Desayunos ', 4) + obtener_productos_por_categoria('Alcohol ', 2)
 
     valor = ", ".join(cesta1)
+    print(cesta1)
     valor2 = ", ".join(cesta2)
     print(valor)
     wks_final.update_cell(i,4 , valor) # Actualiza la celda correspondiente con el resultado
