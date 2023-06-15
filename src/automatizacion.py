@@ -129,13 +129,14 @@ for _, _ in df_final.iterrows():
         cesta = obtener_productos_por_categoria('Carne ', 4) + obtener_productos_por_categoria('Desayunos ', 4) + obtener_productos_por_categoria('Alcohol ', 2)
 
     valor = ", ".join(cesta1)
+    precio = precio_cesta(cesta1, mercadona)
     #print(cesta1)
     valor2 = ", ".join(cesta2)
     #print(valor)
     print(mercadona.head())
     wks_final.update_cell(i,4 , valor) # Actualiza la celda correspondiente con el resultado
-    precio = precio_cesta(valor, mercadona)
-    wks_final.update_cell(i,6 , cesta1)
+    
+    wks_final.update_cell(i,6 , precio)
     wks_final.update_cell(i,5 ,valor2)
     # cesta_premium = recomendar_cesta_mas_cara(df3, cesta, len(cesta))
     # cesta_premium = cesta_premium[' Name'].tolist()
