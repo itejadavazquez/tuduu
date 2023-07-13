@@ -157,7 +157,7 @@ for _, _ in df_final.iterrows():
         cesta1 = cesta_pasta[0] + cesta_verdura[0] + cesta_carne[0] + cesta_pescado[0] + cesta_legumbres[0] + cesta_ensaladas[0] + cesta_desayuno[0]
         cesta2 = cesta_pasta[1] + cesta_verdura[1] + cesta_carne[1] + cesta_pescado[1] + cesta_legumbres[1] + cesta_ensaladas[1] + cesta_desayuno[1]
       
-  lista_productos_cambiados = []
+lista_productos_cambiados = []
 
 for producto in cesta1:
     productos_similares = difflib.get_close_matches(producto, df_productos[' Name'])
