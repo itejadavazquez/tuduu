@@ -156,8 +156,31 @@ for _, _ in df_final.iterrows():
         cesta_desayuno = obtener_productos_por_categoria('Desayunos ', 4)
         cesta1 = cesta_pasta[0] + cesta_verdura[0] + cesta_carne[0] + cesta_pescado[0] + cesta_legumbres[0] + cesta_ensaladas[0] + cesta_desayuno[0]
         cesta2 = cesta_pasta[1] + cesta_verdura[1] + cesta_carne[1] + cesta_pescado[1] + cesta_legumbres[1] + cesta_ensaladas[1] + cesta_desayuno[1]
+      
+  lista_productos_cambiados = []
+
+for producto in cesta1:
+    productos_similares = difflib.get_close_matches(producto, df_productos[' Name'])
+    
+    if len(productos_similares) > 0:
+        producto_similar_mas_caro = None
+        precio_original = df_productos[df_productos[' Name'] == producto]['Price'].iloc[0]
+        
+        for prod_similar in productos_similares:
+            precio_similar = df_productos[df_productos[' Name'] == prod_similar]['Price'].iloc[0]
+            if precio_similar > precio_original:
+                if producto_similar_mas_caro is None or precio_similar > df_productos[df_productos[' Name'] == producto_similar_mas_caro]['Price'].iloc[0]:
+                    producto_similar_mas_caro = prod_similar
+        
+        if producto_similar_mas_caro is not None:
+            lista_productos_cambiados.append(producto_similar_mas_caro)
+        else:
+            lista_productos_cambiados.append(producto)
+    else:
+        lista_productos_cambiados.append(producto)
 
     valor = ", ".join(cesta1)
+    valor_premium = ", ".join(lista_productos_cambiados)
     precio = precio_cesta(cesta1, mercadona)
     #print(cesta1)
     valor2 = ", ".join(cesta2)
@@ -166,6 +189,7 @@ for _, _ in df_final.iterrows():
     wks_final.update_cell(i,4 , valor) # Actualiza la celda correspondiente con el resultado
     
     wks_final.update_cell(i,6 , precio)
+    wks_final.update_cell(i,7 , valor_premium)
     wks_final.update_cell(i,5 ,valor2)
     # cesta_premium = recomendar_cesta_mas_cara(df3, cesta, len(cesta))
     # cesta_premium = cesta_premium[' Name'].tolist()
