@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from oauth2client.service_account import ServiceAccountCredentials
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
+import difflib
 platos = pd.read_excel('../data/Platos.xlsx')
 mercadona = pd.read_csv('../data/Productos_final.csv')
 
