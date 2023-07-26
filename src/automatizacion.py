@@ -180,20 +180,20 @@ for _, _ in df_final.iterrows():
             else:
                 lista_productos_cambiados.append(producto)
 
-        valor = ", ".join(cesta1)
-        valor_premium = ", ".join(lista_productos_cambiados)
-        precio = precio_cesta(cesta1, mercadona)
-        #print(cesta1)
-        valor2 = ", ".join(cesta2)
-        #print(valor)
-        print(mercadona.head())
-        wks_final.update_cell(i,4 , valor) # Actualiza la celda correspondiente con el resultado
-        
-        wks_final.update_cell(i,6 , precio)
-        wks_final.update_cell(i,7 , valor_premium)
-        wks_final.update_cell(i,5 ,valor2)
-        # cesta_premium = recomendar_cesta_mas_cara(df3, cesta, len(cesta))
-        # cesta_premium = cesta_premium[' Name'].tolist()
-        # valor2 = ", ".join(cesta_premium)
-        # wks_final.update_cell(i,5 , valor2) # Actualiza la celda correspondiente con el resultado
-        i += 1
+    valor = ", ".join(cesta1)
+    valor_premium = ", ".join(lista_productos_cambiados)
+    precio = precio_cesta(cesta1, mercadona)
+    #print(cesta1)
+    valor2 = ", ".join(cesta2)
+    #print(valor)
+    print(mercadona.head())
+    wks_final.update_cell(i,4 , valor) # Actualiza la celda correspondiente con el resultado
+    
+    wks_final.update_cell(i,6 , precio)
+    wks_final.update_cell(i,7 , valor_premium)
+    wks_final.update_cell(i,5 ,valor2)
+    # cesta_premium = recomendar_cesta_mas_cara(df3, cesta, len(cesta))
+    # cesta_premium = cesta_premium[' Name'].tolist()
+    # valor2 = ", ".join(cesta_premium)
+    # wks_final.update_cell(i,5 , valor2) # Actualiza la celda correspondiente con el resultado
+    i += 1
