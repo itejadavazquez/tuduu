@@ -131,4 +131,4 @@ websocket-client==1.4.2
 widgetsnbextension==4.0.5
 wsproto==1.2.0
 fuzzywuzzy==0.18.0
-python==3.9.*
+difflib
