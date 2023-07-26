@@ -160,25 +160,25 @@ for _, _ in df_final.iterrows():
       
 lista_productos_cambiados = []
 
-for producto in cesta1:
-    productos_similares = difflib.get_close_matches(producto, mercadona[' Name'])
-    
-    if len(productos_similares) > 0:
-        producto_similar_mas_caro = None
-        precio_original = mercadona[mercadona[' Name'] == producto]['Price'].iloc[0]
+    for producto in cesta1:
+        productos_similares = difflib.get_close_matches(producto, mercadona[' Name'])
         
-        for prod_similar in productos_similares:
-            precio_similar = mercadona[mercadona[' Name'] == prod_similar]['Price'].iloc[0]
-            if precio_similar > precio_original:
-                if producto_similar_mas_caro is None or precio_similar > mercadona[mercadona[' Name'] == producto_similar_mas_caro]['Price'].iloc[0]:
-                    producto_similar_mas_caro = prod_similar
-        
-        if producto_similar_mas_caro is not None:
-            lista_productos_cambiados.append(producto_similar_mas_caro)
+        if len(productos_similares) > 0:
+            producto_similar_mas_caro = None
+            precio_original = mercadona[mercadona[' Name'] == producto]['Price'].iloc[0]
+            
+            for prod_similar in productos_similares:
+                precio_similar = mercadona[mercadona[' Name'] == prod_similar]['Price'].iloc[0]
+                if precio_similar > precio_original:
+                    if producto_similar_mas_caro is None or precio_similar > mercadona[mercadona[' Name'] == producto_similar_mas_caro]['Price'].iloc[0]:
+                        producto_similar_mas_caro = prod_similar
+            
+            if producto_similar_mas_caro is not None:
+                lista_productos_cambiados.append(producto_similar_mas_caro)
+            else:
+                lista_productos_cambiados.append(producto)
         else:
             lista_productos_cambiados.append(producto)
-    else:
-        lista_productos_cambiados.append(producto)
 
     valor = ", ".join(cesta1)
     valor_premium = ", ".join(lista_productos_cambiados)
