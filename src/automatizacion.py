@@ -161,16 +161,16 @@ for _, _ in df_final.iterrows():
 lista_productos_cambiados = []
 
 for producto in cesta1:
-    productos_similares = difflib.get_close_matches(producto, df_productos[' Name'])
+    productos_similares = difflib.get_close_matches(producto, mercadona[' Name'])
     
     if len(productos_similares) > 0:
         producto_similar_mas_caro = None
-        precio_original = df_productos[df_productos[' Name'] == producto]['Price'].iloc[0]
+        precio_original = mercadona[mercadona[' Name'] == producto]['Price'].iloc[0]
         
         for prod_similar in productos_similares:
-            precio_similar = df_productos[df_productos[' Name'] == prod_similar]['Price'].iloc[0]
+            precio_similar = mercadona[mercadona[' Name'] == prod_similar]['Price'].iloc[0]
             if precio_similar > precio_original:
-                if producto_similar_mas_caro is None or precio_similar > df_productos[df_productos[' Name'] == producto_similar_mas_caro]['Price'].iloc[0]:
+                if producto_similar_mas_caro is None or precio_similar > mercadona[mercadona[' Name'] == producto_similar_mas_caro]['Price'].iloc[0]:
                     producto_similar_mas_caro = prod_similar
         
         if producto_similar_mas_caro is not None:
