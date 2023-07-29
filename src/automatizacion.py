@@ -180,8 +180,30 @@ for _, _ in df_final.iterrows():
         else:
             lista_productos_cambiados.append(producto)
 
+    lista_productos_cambiados_baratos = []
+    for producto in cesta1:
+        productos_similares = difflib.get_close_matches(producto, mercadona['Name'])
+        
+        if len(productos_similares) > 0:
+            producto_similar_mas_barato = None
+            precio_original = mercadona[mercadona['Name'] == producto]['Price'].iloc[0]
+            
+            for prod_similar in productos_similares:
+                precio_similar = mercadona[mercadona['Name'] == prod_similar]['Price'].iloc[0]
+                if precio_similar < precio_original:
+                    if producto_similar_mas_barato is None or precio_similar < mercadona[mercadona['Name'] == producto_similar_mas_barato]['Price'].iloc[0]:
+                        producto_similar_mas_barato = prod_similar
+            
+            if producto_similar_mas_barato is not None:
+                lista_productos_cambiados_baratos.append(producto_similar_mas_barato)
+            else:
+                lista_productos_cambiados_baratos.append(producto)
+        else:
+            lista_productos_cambiados_baratos.append(producto)
+
     valor = ", ".join(cesta1)
     valor_premium = ", ".join(lista_productos_cambiados)
+    valor_oferta = ", ".join(lista_productos_cambiados_baratos)
     precio = precio_cesta(cesta1, mercadona)
     #print(cesta1)
     valor2 = ", ".join(cesta2)
@@ -191,6 +213,7 @@ for _, _ in df_final.iterrows():
     
     wks_final.update_cell(i,6 , precio)
     wks_final.update_cell(i,7 , valor_premium)
+    wks_final.update_cell(i,8 , valor_oferta)
     wks_final.update_cell(i,5 ,valor2)
     # cesta_premium = recomendar_cesta_mas_cara(df3, cesta, len(cesta))
     # cesta_premium = cesta_premium[' Name'].tolist()
