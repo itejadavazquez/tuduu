@@ -113,27 +113,25 @@ for _, _ in df_final.iterrows():
     tipo_consumidor = _['tipo cliente']
     print(tipo_consumidor)
     if tipo_consumidor == 'sin restricciones':
-        cesta_pasta = obtener_productos_por_categoria('Pasta ', 2)
-        cesta_verdura = obtener_productos_por_categoria('Verduras ', 1)
-        cesta_carne = obtener_productos_por_categoria('Carne ', 3)
+        cesta_pasta = obtener_productos_por_categoria('Pasta ', 1)
+        cesta_carne = obtener_productos_por_categoria('Carne ', 2)
         cesta_pescado = obtener_productos_por_categoria('Pescado', 1)
         cesta_legumbres = obtener_productos_por_categoria('Legumbres ', 1)
         cesta_ensaladas = obtener_productos_por_categoria('Ensaladas', 1)
-        cesta_pure = obtener_productos_por_categoria('Purés', 1)
-        cesta_desayuno = obtener_productos_por_categoria('Desayunos ', 4)
+        cesta_desayuno = obtener_productos_por_categoria('Desayunos ', 3)
         cesta_bebidas = obtener_productos_por_categoria('Bebidas ', 1)
         cesta_alcohol = obtener_productos_por_categoria('Alcohol ', 1)
-        cesta1 = cesta_pasta[0] + cesta_verdura[0] + cesta_carne[0] + cesta_pescado[0] + cesta_legumbres[0] + cesta_ensaladas[0] + cesta_pure[0] + cesta_desayuno[0] + cesta_bebidas[0] + cesta_alcohol[0]
-        cesta2 = cesta_pasta[1] + cesta_verdura[1] + cesta_carne[1] + cesta_pescado[1] + cesta_legumbres[1] + cesta_ensaladas[1] + cesta_pure[1] + cesta_desayuno[1] + cesta_bebidas[1] + cesta_alcohol[1]
+        cesta1 = cesta_pasta[0] + cesta_carne[0] + cesta_pescado[0] + cesta_legumbres[0] + cesta_ensaladas[0] + cesta_desayuno[0] + cesta_bebidas[0] + cesta_alcohol[0]
+        cesta2 = cesta_pasta[1] + cesta_carne[1] + cesta_pescado[1] + cesta_legumbres[1] + cesta_ensaladas[1] + cesta_desayuno[1] + cesta_bebidas[1] + cesta_alcohol[1]
     elif tipo_consumidor == 'Como sano pero me gusta caer en la tentación…':
         cesta_pasta = obtener_productos_por_categoria('Pasta ', 2)
-        cesta_verdura = obtener_productos_por_categoria('Verduras ', 2) 
+        cesta_verdura = obtener_productos_por_categoria('Verduras ', 1) 
         cesta_carne = obtener_productos_por_categoria('Carne ', 1) 
         cesta_pescado = obtener_productos_por_categoria('Pescado', 1)
         cesta_legumbres = obtener_productos_por_categoria('Legumbres ', 1)
         cesta_ensaladas = obtener_productos_por_categoria('Ensaladas', 1)
         cesta_pure = obtener_productos_por_categoria('Purés', 1)
-        cesta_desayuno = obtener_productos_por_categoria('Desayunos ', 4)
+        cesta_desayuno = obtener_productos_por_categoria('Desayunos ', 3)
         cesta1 = cesta_pasta[0] + cesta_verdura[0] + cesta_carne[0] + cesta_pescado[0] + cesta_legumbres[0] + cesta_ensaladas[0] + cesta_pure[0] + cesta_desayuno[0]
         cesta2 = cesta_pasta[1] + cesta_verdura[1] + cesta_carne[1] + cesta_pescado[1] + cesta_legumbres[1] + cesta_ensaladas[1] + cesta_pure[1] + cesta_desayuno[1]
     elif tipo_consumidor == 'Dieta equilibrada, sin excesos':
@@ -148,13 +146,13 @@ for _, _ in df_final.iterrows():
         cesta1 = cesta_pasta[0] + cesta_verdura[0] + cesta_carne[0] + cesta_pescado[0] + cesta_legumbres[0] + cesta_ensaladas[0] + cesta_pure[0] + cesta_desayuno[0]
         cesta2 = cesta_pasta[1] + cesta_verdura[1] + cesta_carne[1] + cesta_pescado[1] + cesta_legumbres[1] + cesta_ensaladas[1] + cesta_pure[1] + cesta_desayuno[1]
     elif tipo_consumidor == 'Como sano y deporte':
-        cesta_pasta = obtener_productos_por_categoria('Pasta ', 3)
-        cesta_verdura = obtener_productos_por_categoria('Verduras ', 2) 
-        cesta_carne = obtener_productos_por_categoria('Carne ', 2) 
-        cesta_pescado = obtener_productos_por_categoria('Pescado', 3)
+        cesta_pasta = obtener_productos_por_categoria('Pasta ', 1)
+        cesta_verdura = obtener_productos_por_categoria('Verduras ', 1) 
+        cesta_carne = obtener_productos_por_categoria('Carne ', 1) 
+        cesta_pescado = obtener_productos_por_categoria('Pescado', 1)
         cesta_legumbres = obtener_productos_por_categoria('Legumbres ', 1)
         cesta_ensaladas = obtener_productos_por_categoria('Ensaladas', 1)
-        cesta_desayuno = obtener_productos_por_categoria('Desayunos ', 4)
+        cesta_desayuno = obtener_productos_por_categoria('Desayunos ', 3)
         cesta1 = cesta_pasta[0] + cesta_verdura[0] + cesta_carne[0] + cesta_pescado[0] + cesta_legumbres[0] + cesta_ensaladas[0] + cesta_desayuno[0]
         cesta2 = cesta_pasta[1] + cesta_verdura[1] + cesta_carne[1] + cesta_pescado[1] + cesta_legumbres[1] + cesta_ensaladas[1] + cesta_desayuno[1]
       
