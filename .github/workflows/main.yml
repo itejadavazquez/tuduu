@@ -3,7 +3,7 @@ name: Ejecutar script semanalmente
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *' # Esta línea se configura para ejecutar el script cada viernes a las 13:00 UTC
+    - cron: '0 0 */5 * *' # Esta línea se configura para ejecutar el script cada viernes a las 13:00 UTC
 
 jobs:
   run-script:
