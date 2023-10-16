@@ -12,7 +12,7 @@ from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 import difflib
 platos = pd.read_excel('../data/Platos.xlsx')
-mercadona = pd.read_csv('../data/Productos_final.csv')
+mercadona = pd.read_excel('../data/productos_finales.xlsx')
 
 
 scope = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
